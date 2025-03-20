@@ -1,18 +1,25 @@
-// Import the necessary Firebase modules
+// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your Firebase config here
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
+  apiKey: "AIzaSyAmQ4Gki9uq7JmXKuRuzYtokjMdCaul6VA",
+  authDomain: "cps406project.firebaseapp.com",
+  databaseURL: "https://cps406project-default-rtdb.firebaseio.com",
+  projectId: "cps406project",
+  storageBucket: "cps406project.firebasestorage.app",
+  messagingSenderId: "914014838460",
+  appId: "1:914014838460:web:b4ff14a88a0c5e958dbab9",
+  measurementId: "G-0XS6TSF48H"
 };
 
 // Initialize Firebase
- const cong = initializeApp(firebaseConfig);
+const cong = initializeApp(firebaseConfig);
+const analytics = getAnalytics(cong);
 
-  export default cong;
+export default cong;
 // Now you can use Firebase services in your React app!
