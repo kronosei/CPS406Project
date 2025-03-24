@@ -6,7 +6,7 @@ export default function Home() {
       <div>
         <header><h1>Welcome to the Generic Co-op Page</h1></header>
         <section>Press below to sign up or log in</section>
-        <section id="link"><Link href="/Login">To Login/Sign up page</Link></section>
+        <section id="link"><Link href="/login">To Login/Sign up page</Link></section>
       </div>
     </Layout>
   );
