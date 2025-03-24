@@ -1,7 +1,7 @@
 'use client'
 
 import { FormEvent, useState } from "react";
-import { auth } from "../../..";
+import { auth } from "../../../index";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import Layout from "../../components/Layout"
