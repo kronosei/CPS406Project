@@ -1,5 +1,4 @@
 import React, { ReactNode } from "react";
-import Link from 'next/link';
 import Image from 'next/image';
 import logo from '@/assets/cps406logo.png';
 import style from "./Layout.module.css";
