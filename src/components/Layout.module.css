@@ -1,0 +1,13 @@
+.layoutMain {
+    background-color: white;
+}
+
+.logo {
+    display: inline;
+    margin: 1vw;
+}
+
+.navBar {
+    display: inline;
+    color: black;
+}

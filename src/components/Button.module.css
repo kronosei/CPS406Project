@@ -1,0 +1,12 @@
+.button {
+    background-color:rgb(200,200,200);
+    padding: 0.2vw;
+    border: solid black;
+    border-width: 0.2vw;
+    border-radius: 0.5vw;
+    color: black;
+}
+
+.button:active {
+    background-color: rgb(100,100,100);
+}
