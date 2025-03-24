@@ -24,7 +24,7 @@ export default function Login() {
   async function checkUser(event: FormEvent<HTMLFormElement>){
     event.preventDefault()
     const users = collection(firestore, "users")
-    var id = ""
+    let id = ""
     await createUserWithEmailAndPassword(auth, inputEmail, inputPass).then((userCredentials) => {
         id = userCredentials.user.uid
       }
