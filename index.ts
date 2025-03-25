@@ -12,7 +12,7 @@ const firebaseConfig = {
   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
 // Initialize Firebase
@@ -24,4 +24,4 @@ const firestore = getFirestore(app);
 //connectAuthEmulator(auth, "http://localhost:9099");
 //connectFirestoreEmulator(firestore, 'localhost', 8080);
 
-export {auth, firestore}
+export { auth, firestore };
