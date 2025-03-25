@@ -4,21 +4,16 @@ import logo from '@/assets/cps406logo.png';
 import style from "./Layout.module.css";
 import Button from "./Button";
 
-interface LayoutProps {
-    children: ReactNode;
-}
-
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+function Layout() {
     return (
-        <div className={style.layout}>
-            <div className={style.layoutMain} >
-            <Image className={style.logo} src={logo} alt="Logo" width={100} height={100} />
-            <nav className={style.navBar}>
-                <Button text="HomePage" href="/"/> | <Button text="Login" href="/login"/> | <Button text="Register" href="/register"/> | <Button text="Submit a Form" href="/submit"/> 
-            </nav>
-            </div>
-            <div>
-                <main>{children}</main>
+        <div className="fixed w-screen">
+            <div className="grid grid-cols-12 bg-black p-5 mx-auto">
+                <div className="col-span-4 sm:col-span-8 xl:col-span-10"></div>
+                <nav className="col-span-8 grid grid-cols-3 sm:col-span-4 xl:col-span-2">
+                    <a className="col-span-1 hover:font-bold transition-all delay-0 duration-300" href="/">Home</a>
+                    <a className="col-span-1 hover:font-bold transition-all delay-0 duration-300" href="/login">Login</a>
+                    <a className="col-span-1 hover:font-bold transition-all delay-0 duration-300" href="/register">Register</a>
+                </nav>
             </div>
         </div>
     )

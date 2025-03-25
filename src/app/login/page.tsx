@@ -5,7 +5,6 @@ import { auth } from "../../../index";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import Layout from "../../components/Layout"
-import style from "./login.module.css";
 
 export default function Login() {
   const [inputEmail, setEmail] = useState("")
@@ -30,8 +29,8 @@ export default function Login() {
     })
   }
   return (
-   <Layout>
-   <div className={style.main}></div>
+    <>
+   <Layout/>
    <div className="relative flex flex-col h-3/4 sm:w-1/2 md:w-1/2 lg:w-2/5 xl:w-1/3 2xl:w-1/4 w-3/4 bg-white rounded-4xl transform-[translate(-50%,-50%)] top-1/2 left-1/2">
       <span className='text-black self-center text-4xl font-bold pt-32'>Login</span>
       <span className={error ? "text-red-500 self-center text-lg p-10 font-bold" : "self-center text-lg p-10 invisible"}>Invalid username or password</span>
@@ -48,6 +47,6 @@ export default function Login() {
         <span className="text-gray-400" onClick={_ =>router.push('/register')}>Need an account? Click here!</span>
       </div>
    </div>
-   </Layout>
+    </>
   );
 }
