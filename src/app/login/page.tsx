@@ -4,7 +4,7 @@ import { FormEvent, useState } from "react";
 import { auth } from "../../../index";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
-import Layout from "../../components/layout";
+import Layout from "../../components/Layout";
 
 export default function Login() {
   const [inputEmail, setEmail] = useState("");
