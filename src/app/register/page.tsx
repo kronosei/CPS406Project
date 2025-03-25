@@ -5,7 +5,7 @@ import { auth, firestore } from "../../..";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { collection, doc, setDoc } from "firebase/firestore";
-import Layout from "../../components/layout";
+import Layout from "../../components/Layout";
 
 export default function Login() {
   const [inputEmail, setEmail] = useState("");
