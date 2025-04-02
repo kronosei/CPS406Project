@@ -21,7 +21,7 @@ function Layout() {
   const router = useRouter();
   const logout = () => {
     auth.signOut();
-    router.push("/login");
+    router.push("/");
   };
   return (
     <div className="absolute w-screen">

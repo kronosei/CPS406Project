@@ -35,6 +35,12 @@ export async function isAccepted(uid: string) {
   return docSnap.data()?.accept;
 }
 
+export async function applied(uid: string) {
+  const docRef = doc(firestore, "users", uid);
+  const docSnap = await getDoc(docRef);
+  return docSnap.data()?.applied;
+}
+
 export async function updateUser(
   uid: string,
   type: string,

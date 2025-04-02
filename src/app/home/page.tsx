@@ -5,7 +5,7 @@ import { auth } from "../../../index";
 import { updateProfile, User } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import Layout from "../../components/Layout";
-import { updateUser } from "../../../func";
+import { applied, isAccepted, updateUser } from "../../../func";
 
 export default function Login() {
   const [inputName, setName] = useState("");
@@ -13,13 +13,23 @@ export default function Login() {
   const [error, setError] = useState("");
   const router = useRouter();
   let acc : User | null = null
-  auth.onAuthStateChanged((user) => {
-      if (!user) {
-          router.replace("/", {scroll: false});
-        } else{
-            acc = user
-        }
-    });
+  const [appStatus, setAppStatus] = useState(false)
+  const [loading, setLoading] = useState(true)
+      auth.onAuthStateChanged(async (user) => {
+          if (user) {
+                setLoading(false)
+                acc = user
+                console.log(acc)
+                if(await isAccepted(acc.uid)){
+                    router.replace("/submit")
+                }
+                if(await applied(acc.uid)){
+                    setAppStatus(true)
+                }
+            } else{
+                router.replace("/")
+            }
+        });
     
   function checkUser(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -38,21 +48,22 @@ export default function Login() {
   }
   return (
     <>
-      <Layout />
-      <div className="relative flex flex-col h-3/4 sm:w-1/2 md:w-1/2 lg:w-2/5 xl:w-1/3 2xl:w-1/4 w-3/4 bg-white rounded-4xl transform-[translate(-50%,-50%)] top-1/2 left-1/2">
+        {!loading && (<Layout />)}
+    {!appStatus && !loading && (
+        <div className="relative flex flex-col h-3/4 sm:w-1/2 md:w-1/2 lg:w-2/5 xl:w-1/3 2xl:w-1/4 w-3/4 bg-white rounded-4xl transform-[translate(-50%,-50%)] top-1/2 left-1/2">
         <span className="text-black self-center text-3xl md:text-2xl font-bold pt-32 text-center">
-          Apply to join the co-op program
+        Apply to join the co-op program
         </span>
         <span
-          className={
-            error
+        className={
+              error
               ? "text-red-500 self-center text-lg text-center p-10 font-bold"
               : "self-center text-lg p-10 invisible"
-          }
-        >
-          {error}
-        </span>
-        <div className="flex flex-col">
+            }
+            >
+            {error}
+            </span>
+            <div className="flex flex-col">
           <form
             onSubmit={checkUser}
             className="[&>*]:block rounded-sm h-1/4 w-3/4 justify-center self-center content-center"
@@ -69,7 +80,7 @@ export default function Login() {
               }}
               className={`w-full border-b-2 mr-5 my-5 outline-0 ${
                 !error
-                  ? "border-b-gray-400 placeholder:text-gray-400 text-black"
+                ? "border-b-gray-400 placeholder:text-gray-400 text-black"
                   : "border-b-red-500 placeholder:text-red-500 text-red-300"
               }`}
             />
@@ -84,17 +95,24 @@ export default function Login() {
                 setID("");
               }}
               className={`w-full border-b-2 mr-5 my-5 pt-5 outline-0 ${
-                !error
+                  !error
                   ? "border-b-gray-400 placeholder:text-gray-400 text-black"
                   : "border-b-red-500 placeholder:text-red-500 text-red-300"
-              }`}
-            />
+                  }`}
+                  />
             <button type="submit" className="bg-gray-800 p-5 mt-16 w-full">
-              Submit
+            Submit
             </button>
           </form>
         </div>
-      </div>
+      </div>)}
+
+      {appStatus && !loading && (
+      <div className="relative flex flex-col h-3/4 sm:w-1/2 md:w-1/2 lg:w-2/5 xl:w-1/3 2xl:w-1/4 w-3/4 bg-white rounded-4xl transform-[translate(-50%,-50%)] top-1/2 left-1/2">
+        <span className="text-black self-center text-3xl md:text-2xl font-bold pt-32 text-center">
+          Thank you for applying, if accepted, you will gain access to the form submission page shortly.
+        </span>
+        </div>)}
     </>
-  );
+  )
 }
