@@ -9,6 +9,14 @@ import { auth, firestore } from "./index";
 
 //These functions can only be used in async functions!
 
+export async function getData(uid: string){
+  //Untested
+  const docRef = doc(firestore, "users", uid);
+  const docSnap = await getDoc(docRef);
+  console.log(docSnap.data())
+  return docSnap.data()
+}
+
 export async function getType(uid: string) {
   const docRef = doc(firestore, "users", uid);
   const docSnap = await getDoc(docRef);
@@ -31,7 +39,9 @@ export async function updateUser(
   uid: string,
   type: string,
   admin: boolean,
-  accept: boolean | null = null
+  id: string | null = null, 
+  applied: boolean | null = null,
+  accepted: boolean | null = null
 ) {
   const docRef = doc(firestore, "users", uid);
   if (type != "student") {
@@ -40,6 +50,8 @@ export async function updateUser(
     updateDoc(docRef, {
       type: type,
       admin: admin,
-      accept: accept == null ? deleteField() : accept,
+      id: id == null ? deleteField : id,
+      applied: applied == null ? deleteField() : applied,
+      accepted: accepted == null ? deleteField() : accepted,
     });
 }

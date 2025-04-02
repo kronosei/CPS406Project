@@ -16,7 +16,7 @@ export default function Login() {
   //Checks if the user is signed in.
   auth.onAuthStateChanged((user) => {
     if (user) {
-      router.push("/");
+      router.replace("/home", {scroll: false});
     } else {
       console.log("not signed in");
     }
@@ -160,7 +160,7 @@ export default function Login() {
         <div className="p-10 self-center">
           <span
             className="text-gray-400"
-            onClick={(_) => router.push("/login")}
+            onClick={(_) => router.replace("/login")}
           >
             Already have an account? Click here!
           </span>

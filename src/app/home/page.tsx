@@ -2,48 +2,55 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import { auth } from "../../../index";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { updateProfile, User } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import Layout from "../../components/Layout";
+import { updateUser } from "../../../func";
 
 export default function Login() {
-  const [inputEmail, setEmail] = useState("");
-  const [inputPass, setPass] = useState("");
-  const [error, setError] = useState(false);
+  const [inputName, setName] = useState("");
+  const [inputID, setID] = useState("");
+  const [error, setError] = useState("");
   const router = useRouter();
-  //Checks if the user is signed in.
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        router.replace("/home", {scroll: false});
-      } else {
-        console.log("not signed in");
-      }
+  let acc : User | null = null
+  auth.onAuthStateChanged((user) => {
+      if (!user) {
+          router.replace("/", {scroll: false});
+        } else{
+            acc = user
+        }
     });
+    
   function checkUser(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    signInWithEmailAndPassword(auth, inputEmail, inputPass)
-      .then(() => {
-        router.replace("/home", {scroll: false});
-      })
-      .catch((e) => {
-        setError(true);
-      });
+    event.preventDefault()
+    console.log(acc)
+    if(acc){
+        updateProfile(acc, {
+            displayName: inputName
+        })
+        if(inputID && inputName){
+            updateUser(acc.uid, "student", false, inputID, true, false)
+        } else{
+            setError("You must include both your name and student ID!")
+        }
+    }
+    
   }
   return (
     <>
       <Layout />
       <div className="relative flex flex-col h-3/4 sm:w-1/2 md:w-1/2 lg:w-2/5 xl:w-1/3 2xl:w-1/4 w-3/4 bg-white rounded-4xl transform-[translate(-50%,-50%)] top-1/2 left-1/2">
-        <span className="text-black self-center text-4xl font-bold pt-32">
-          Login
+        <span className="text-black self-center text-3xl md:text-2xl font-bold pt-32 text-center">
+          Apply to join the co-op program
         </span>
         <span
           className={
             error
-              ? "text-red-500 self-center text-lg p-10 font-bold"
+              ? "text-red-500 self-center text-lg text-center p-10 font-bold"
               : "self-center text-lg p-10 invisible"
           }
         >
-          Invalid username or password
+          {error}
         </span>
         <div className="flex flex-col">
           <form
@@ -52,13 +59,13 @@ export default function Login() {
           >
             <input
               type="text"
-              value={inputEmail}
-              onChange={(e) => setEmail(e.target.value)}
+              value={inputName}
+              onChange={(e) => setName(e.target.value)}
               id="username"
-              placeholder="Email"
+              placeholder="Name"
               onFocus={(_) => {
-                setError(false);
-                setEmail("");
+                setError("");
+                setName("");
               }}
               className={`w-full border-b-2 mr-5 my-5 outline-0 ${
                 !error
@@ -67,14 +74,14 @@ export default function Login() {
               }`}
             />
             <input
-              type="password"
-              value={inputPass}
-              onChange={(e) => setPass(e.target.value)}
-              id="password"
-              placeholder="Password"
+              type="text"
+              value={inputID}
+              onChange={(e) => setID(e.target.value)}
+              id="text"
+              placeholder="Student ID"
               onFocus={(_) => {
-                setError(false);
-                setPass("");
+                setError("");
+                setID("");
               }}
               className={`w-full border-b-2 mr-5 my-5 pt-5 outline-0 ${
                 !error
@@ -86,14 +93,6 @@ export default function Login() {
               Submit
             </button>
           </form>
-        </div>
-        <div className="p-10 self-center">
-          <span
-            className="text-gray-400"
-            onClick={(_) => router.push("/register")}
-          >
-            Need an account? Click here!
-          </span>
         </div>
       </div>
     </>

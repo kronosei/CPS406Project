@@ -1,12 +1,23 @@
 "use client"
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { auth } from "../../index";
 import { useRouter } from "next/navigation";
 
 function Layout() {
+
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if(user){
+        setIsAuthenticated(true);
+      } else{
+        setIsAuthenticated(false);
+      }
+    })
+  })
+    
   const router = useRouter();
   const logout = () => {
     auth.signOut();
@@ -39,6 +50,7 @@ function Layout() {
               </Link>
             </>
           )}
+          {isAuthenticated && (
           <Link
             className="col-span-1 hover:font-bold transition-all delay-0 duration-300"
             href="/"
@@ -46,6 +58,7 @@ function Layout() {
           >
             Log out
           </Link>
+        )}
         </nav>
       </div>
     </div>
