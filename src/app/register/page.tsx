@@ -70,7 +70,7 @@ export default function Login() {
   return (
     <>
       <Layout />
-      <div className="relative flex flex-col h-3/4 sm:w-1/2 md:w-1/2 lg:w-2/5 xl:w-1/3 2xl:w-1/4 w-3/4 bg-white rounded-4xl transform-[translate(-50%,-50%)] top-1/2 left-1/2">
+      <div className="relative flex flex-col min-h-3/4 sm:w-1/2 md:w-1/2 lg:w-2/5 xl:w-1/3 2xl:w-1/4 w-3/4 bg-white rounded-4xl transform-[translate(-50%,-50%)] top-1/2 left-1/2">
         <span className="text-black self-center text-4xl font-bold pt-32">
           Register
         </span>
@@ -157,7 +157,7 @@ export default function Login() {
             </button>
           </form>
         </div>
-        <div className="p-10 self-center">
+        <div className="p-10 self-center text-center">
           <span
             className="text-gray-400"
             onClick={(_) => router.replace("/login")}
