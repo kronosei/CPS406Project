@@ -51,6 +51,7 @@ function Layout() {
             </>
           )}
           {isAuthenticated && (
+          <>
           <Link
             className="col-span-1 hover:font-bold transition-all delay-0 duration-300"
             href="/"
@@ -58,6 +59,14 @@ function Layout() {
           >
             Log out
           </Link>
+
+          <Link
+            className="col-span-1 hover:font-bold transition-all delay-0 duration-300"
+            href="/workReport"
+          >
+            Submit Work Report
+          </Link>
+          </>
         )}
         </nav>
       </div>
