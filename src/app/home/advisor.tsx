@@ -10,7 +10,7 @@ import { applied, isAccepted, updateUser } from "../../../func";
 export default function Advisor() {
 
   const router = useRouter();
-  let acc : User | null = null
+  const acc : User | null = null
       auth.onAuthStateChanged(async (user) => {
          
         });
