@@ -39,24 +39,25 @@ export default function Login() {
             break;
         }
       });
-    switch (type) {
-      case 1:
-        setDoc(doc(users, id), {
+    if(inputEmail && inputPass){
+      switch (type) {
+        case 1:
+          setDoc(doc(users, id), {
           type: "student",
           email: inputEmail,
           admin: false,
         });
         console.log("Student Account");
         break;
-      case 2:
-        setDoc(doc(users, id), {
+        case 2:
+          setDoc(doc(users, id), {
           type: "employer",
           email: inputEmail,
           admin: false,
         });
         console.log("Employer Account");
         break;
-      case 3:
+        case 3:
         setDoc(doc(users, id), {
           type: "advisor",
           email: inputEmail,
@@ -67,6 +68,7 @@ export default function Login() {
       default:
         setError("Select a user type!");
         return;
+      }
     }
   }
   return (
@@ -79,8 +81,8 @@ export default function Login() {
         <span
           className={
             error
-              ? "text-red-500 self-center text-lg p-5 font-bold"
-              : "self-center text-lg p-5 invisible"
+            ? "text-red-500 self-center text-lg p-5 font-bold"
+            : "self-center text-lg p-5 invisible"
           }
         >
           {error}

@@ -17,7 +17,6 @@ export async function getData(uid: string) {
   //Untested
   const docRef = doc(firestore, "users", uid);
   const docSnap = await getDoc(docRef);
-  console.log(docSnap.data())
   return docSnap.data()
 }
 
