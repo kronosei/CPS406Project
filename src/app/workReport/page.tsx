@@ -6,7 +6,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import Layout from "../../components/Layout";
 
-export default function workReport() {
+export default function WorkReport() {
   const [inputEmployer, setEmployer] = useState("");
   const [inputStudent, setStudent] = useState("");
   const [inputReport, setReport] = useState("");
