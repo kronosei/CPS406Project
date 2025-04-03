@@ -17,8 +17,6 @@ export default function Login() {
   auth.onAuthStateChanged((user) => {
     if (user) {
       router.replace("/home", {scroll: false});
-    } else {
-      console.log("not signed in");
     }
   });
   async function checkUser(event: FormEvent<HTMLFormElement>) {
@@ -39,7 +37,7 @@ export default function Login() {
             break;
         }
       });
-    if(inputEmail && inputPass){
+    try{
       switch (type) {
         case 1:
           setDoc(doc(users, id), {
@@ -47,7 +45,6 @@ export default function Login() {
           email: inputEmail,
           admin: false,
         });
-        console.log("Student Account");
         break;
         case 2:
           setDoc(doc(users, id), {
@@ -55,7 +52,6 @@ export default function Login() {
           email: inputEmail,
           admin: false,
         });
-        console.log("Employer Account");
         break;
         case 3:
         setDoc(doc(users, id), {
@@ -63,12 +59,13 @@ export default function Login() {
           email: inputEmail,
           admin: false,
         });
-        console.log("Advisor Account");
         break;
       default:
         setError("Select a user type!");
         return;
       }
+    } catch{
+      setError("Invalid email or password!")
     }
   }
   return (

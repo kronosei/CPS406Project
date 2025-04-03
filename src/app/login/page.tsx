@@ -16,9 +16,7 @@ export default function Login() {
     auth.onAuthStateChanged((user) => {
       if (user) {
         router.replace("/home", {scroll: false});
-      } else {
-        console.log("not signed in");
-      }
+      } 
     });
     function checkUser(event: FormEvent<HTMLFormElement>) {
       event.preventDefault();
@@ -44,7 +42,7 @@ export default function Login() {
               : "self-center text-lg p-10 invisible"
           }
         >
-          Invalid username or password
+          Invalid email or password!
         </span>
         <div className="flex flex-col">
           <form
