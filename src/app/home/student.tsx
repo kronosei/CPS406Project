@@ -17,7 +17,6 @@ export default function Student() {
       auth.onAuthStateChanged(async (user) => {
           if (user) {
                 acc = user
-                console.log(acc)
                 if(await isAccepted(acc.uid)){
                     router.replace("/submit")
                 }
@@ -31,13 +30,10 @@ export default function Student() {
     
   function checkUser(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    console.log(acc)
     if(acc){
-        updateProfile(acc, {
-            displayName: inputName
-        })
         if(inputID && inputName){
-            updateUser(acc.uid, "student", false, inputID, true, false)
+            updateUser(acc.uid, "student", false, inputID, inputName, true, false)
+            router.replace("/home")
         } else{
             setError("You must include both your name and student ID!")
         }

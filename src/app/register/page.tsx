@@ -43,14 +43,15 @@ export default function Login() {
       case 1:
         setDoc(doc(users, id), {
           type: "student",
+          email: inputEmail,
           admin: false,
-          accept: false,
         });
         console.log("Student Account");
         break;
       case 2:
         setDoc(doc(users, id), {
           type: "employer",
+          email: inputEmail,
           admin: false,
         });
         console.log("Employer Account");
@@ -58,6 +59,7 @@ export default function Login() {
       case 3:
         setDoc(doc(users, id), {
           type: "advisor",
+          email: inputEmail,
           admin: false,
         });
         console.log("Advisor Account");
