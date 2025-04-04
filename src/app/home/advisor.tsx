@@ -34,7 +34,7 @@ export default function Advisor() {
         <button className="h-32 bg-red-500" onClick={(_) => collect()}>Click to get data</button>
         <table>
           <thead className="[&>*]:bg-black">
-          <tr>
+          <tr className="[&>*]:border-2 [&>*]:border-gray-800 [&>*]:p-2 [&>*]:text-left">
             <th>Email</th>
             <th>Admin</th>
             <th>Type</th>
@@ -42,9 +42,9 @@ export default function Advisor() {
           </thead>
           <tbody className="[&>*]:bg-black">
             {userInfo.map((user, i) => 
-            <tr key={i}>
+            <tr key={i} className="[&>*]:border-2 [&>*]:border-gray-800 [&>*]:p-2 [&>*]:text-left">
               <td>{user.email}</td>
-              <td>{user.admin?.valueOf()}</td>
+              <td>{user.admin?.toString()}</td>
               <td>{user.type}</td>
             </tr>
             )}
