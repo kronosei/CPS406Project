@@ -1,19 +1,18 @@
-
 .layout {
-    width:100vw;
-    height:100vh;
+  width: 100vw;
+  height: 100vh;
 }
 
 .layoutMain {
-    background-color: white;
+  background-color: white;
 }
 
 .logo {
-    display: inline;
-    margin: 1vw;
+  display: inline;
+  margin: 1vw;
 }
 
 .navBar {
-    display: inline;
-    color: black;
+  display: inline;
+  color: black;
 }

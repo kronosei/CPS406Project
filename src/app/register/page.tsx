@@ -122,7 +122,7 @@ export default function Login() {
               }`}
             />
             <div id="type" className="pt-5 w-full" style={{ display: "flex" }}>
-              <div className="flex-1 bg-gray-800 mr-1 py-8 text-center relative">
+              <div className="flex-1 bg-gray-800 mr-1 py-8 text-center relative hover:bg-gray-700 focus-within:bg-gray-600">
                 <input
                   type="radio"
                   name="type"
@@ -132,17 +132,18 @@ export default function Login() {
                 />
                 Student
               </div>
-              <div className="flex-1 bg-gray-800 mr-1 py-8 text-center relative">
+              <div className="flex-1 bg-gray-800 mr-1 py-8 text-center relative hover:bg-gray-700 focus-within:bg-gray-600">
                 <input
                   type="radio"
                   name="type"
                   id=""
                   onChange={(_) => setType(2)}
                   className="absolute appearance-none transform-[translate(-50%,-50%)] top-1/2 left-1/2 w-full h-full"
+                  checked
                 />
                 Employer
               </div>
-              <div className="flex-1 bg-gray-800 mr-1 py-8 text-center relative">
+              <div className="flex-1 bg-gray-800 mr-1 py-8 text-center relative hover:bg-gray-700 focus-within:bg-gray-600">
                 <input
                   type="radio"
                   name="type"
@@ -153,14 +154,14 @@ export default function Login() {
                 Advisor
               </div>
             </div>
-            <button type="submit" className="bg-gray-800 p-5 mt-10 w-full">
+            <button type="submit" className="bg-gray-800 p-5 mt-10 w-full hover:bg-gray-700">
               Submit
             </button>
           </form>
         </div>
         <div className="p-10 self-center text-center">
           <span
-            className="text-gray-400"
+            className="text-gray-500 cursor-default hover:underline"
             onClick={(_) => router.replace("/login")}
           >
             Already have an account? Click here!

@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import Layout from "../../components/Layout";
 import { doc, setDoc } from "firebase/firestore";
 import {auth, firestore} from "../../../index";

@@ -12,19 +12,22 @@ import Advisor from "./advisor";
 export default function Home() {
   const router = useRouter();
   let acc : User | null = null
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [userType, setUserType] = useState("")
   const [loading, setLoading] = useState(true)
   useEffect(() => {
     auth.onAuthStateChanged(async (user) => {
         if (user) {
               setLoading(false)
+              setIsAuthenticated(true)
               acc = user
               setUserType(await getType(acc.uid))
           } else{
+              setIsAuthenticated(false)
               router.replace("/")
           }
       });
-  })
+  }, [])
     
   return (
     <>
