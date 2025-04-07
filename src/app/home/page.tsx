@@ -8,6 +8,7 @@ import Layout from "../../components/Layout";
 import { applied, getType, isAccepted, updateUser } from "../../../func";
 import Student from "./student";
 import Advisor from "./advisor";
+import Modal from "./modal";
 
 export default function Home() {
   const router = useRouter();
