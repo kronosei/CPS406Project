@@ -41,6 +41,12 @@ function Layout() {
             <>
               <Link
                 className="col-span-1 hover:font-bold transition-all delay-0 duration-300"
+                href="/"
+              >
+                Homepage
+              </Link>
+              <Link
+                className="col-span-1 hover:font-bold transition-all delay-0 duration-300"
                 href="/login"
               >
                 Login
