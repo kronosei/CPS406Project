@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Layout from "../../components/Layout";
 import { applied, getCollection, getType, isAccepted, isAdmin, updateUser } from "../../../func";
 import { collection, doc, getDocs } from "firebase/firestore";
+import Modal from "./modal";
 
 interface User {
   accepted: boolean | null;
@@ -19,6 +20,8 @@ interface User {
 
 export default function Advisor() {
   const [userInfo, setUserInfo] = useState<User[]>([])
+  const [modal, setModal] = useState(false)
+  const [dataIndex, setDataIndex] = useState(-1)
 
   const router = useRouter()
   async function collect(){
@@ -29,6 +32,9 @@ export default function Advisor() {
 
   return (
     <>
+    {modal ? 
+    <Modal email={userInfo[dataIndex].email!!} name={userInfo[dataIndex].name!!} accepted={userInfo[dataIndex].accepted!!} admin={userInfo[dataIndex].admin!!} toggle={setModal}/>
+    : null}
       <Layout />
       <div className="relative flex flex-col min-h-3/4 w-3/4  bg-white rounded-4xl transform-[translate(-50%,-50%)] top-1/2 left-1/2 row-span-2 overflow-hidden">
         <button className="bg-red-500" onClick={(_) => collect()}>Refresh</button>
@@ -42,7 +48,10 @@ export default function Advisor() {
           </thead>
           <tbody className="[&>*]:bg-black">
             {userInfo.map((user, i) => 
-            <tr key={i} className="[&>*]:border-2 [&>*]:border-gray-800 [&>*]:p-2 [&>*]:text-left">
+            <tr key={i} className="[&>*]:border-2 [&>*]:border-gray-800 [&>*]:p-2 [&>*]:text-left" onClick={() => {
+              setDataIndex(i)
+              setModal(true)
+            }}>
               <td>{user.email}</td>
               <td>{user.admin?.toString()}</td>
               <td>{user.type}</td>
