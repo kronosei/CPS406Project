@@ -28,6 +28,7 @@ export default function Login() {
         id = userCredentials.user.uid;
       })
       .catch((e) => {
+        console.error("Firebase error:", e.code, e.message);
         switch (e.code) {
           case "auth/email-already-in-use":
             setError("Email already in use!");
