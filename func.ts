@@ -8,6 +8,8 @@ import {
   getDocs,
   QueryDocumentSnapshot,
   updateDoc,
+  query,
+  where
 } from "firebase/firestore";
 import { auth, firestore } from "./index";
 
@@ -36,6 +38,39 @@ export async function getCollection() {
   }
   )
 
+  return result
+}
+
+export async function getReportCollection() {
+  const result = (await getDocs(collection(firestore, "reports"))).docs.map(doc => {
+    const data = doc.data()
+    const info = {
+      EmployerUID: data.EmployerUID,
+      Employer: data.Employer,
+      Student: data.Student,
+      Report: data.Report
+    };
+    return info
+  }
+  )
+  return result
+}
+
+export async function getFilteredReportCollection(uid: string) {
+  const reportCollection = collection(firestore, "reports");
+  const filteredCollection = query(reportCollection, where("EmployerUID", "==", uid));
+
+  const result = (await getDocs(filteredCollection)).docs.map(doc => {
+    const data = doc.data()
+    const info = {
+      EmployerUID: data.EmployerUID,
+      Employer: data.Employer,
+      Student: data.Student,
+      Report: data.Report
+    };
+    return info
+  }
+  )
   return result
 }
 

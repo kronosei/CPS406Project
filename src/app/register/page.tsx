@@ -140,7 +140,6 @@ export default function Login() {
                   id=""
                   onChange={(_) => setType(2)}
                   className="absolute appearance-none transform-[translate(-50%,-50%)] top-1/2 left-1/2 w-full h-full"
-                  checked
                 />
                 Employer
               </div>

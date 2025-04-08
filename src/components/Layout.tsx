@@ -4,13 +4,16 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { auth } from "../../index";
 import { useRouter } from "next/navigation";
+import { applied, getType, isAccepted, updateUser } from "../../func";
 
 function Layout() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userType, setUserType] = useState("");
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
+    auth.onAuthStateChanged(async (user) => {
       if (user) {
         setIsAuthenticated(true);
+        setUserType(await getType(user.uid))
       } else {
         setIsAuthenticated(false);
       }
@@ -68,12 +71,16 @@ function Layout() {
               >
                 Log out
               </Link>
-
+            </>
+          )}
+          
+          {isAuthenticated && userType=="employer" && (
+            <>
               <Link
                 className="col-span-2 hover:font-bold transition-all delay-0 duration-300"
                 href="/workReport"
               >
-                Submit Work Report
+                Submit a Work Report
               </Link>
             </>
           )}

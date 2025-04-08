@@ -1,8 +1,9 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
+import { getType } from "../../../func";
 import Layout from "../../components/Layout";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDocs, collection, query, where } from "firebase/firestore";
 import {auth, firestore} from "../../../index";
 
 export default function WorkReport() {
@@ -11,17 +12,49 @@ export default function WorkReport() {
   const [inputReport, setReport] = useState("");
   const [sucess, setSuccess] = useState(false);
   const [error, setError] = useState(false);
-  //const router = useRouter();
+  const [userUID, setUID] = useState("");
+  
+	useEffect(() => {
+		auth.onAuthStateChanged((user) => {
+			if (user) {
+				setUID(user.uid);
+        console.log("User UID: ", userUID);
+			} else {
+				console.log("Cannot get User UID!");
+			}
+		})
+	}, []);
 
-  function uploadReport(event: FormEvent<HTMLFormElement>) {
+	function generateRandomString(length = 5) {
+		const characters = "1234567890";
+		let result = "";
+		for (let i = 0; i<length;i++) {
+			const randomIndex = Math.floor(Math.random() * characters.length);
+			result += characters.charAt(randomIndex);
+		}
+		return result
+	}
+
+  async function uploadReport(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setDoc(doc(firestore, "Reports", "Report numberplaceholder"), {
+    setDoc(doc(firestore, "reports", `${userUID}${await getDocumentCount()}${generateRandomString()}`), {
+        EmployerUID: userUID,
         Employer: inputEmployer,
         Student: inputStudent,
         Report: inputReport,
     });
     setSuccess(true);
   }
+
+  async function getDocumentCount() {
+    const reportCollection = collection(firestore, "reports");
+		const filteredCollection = query(reportCollection, where("EmployerUID", "==", userUID));
+    const querySnapshot = await getDocs(reportCollection);
+    const docCount = querySnapshot.size;
+    console.log("Number of docs in report colelction:", docCount);
+    return docCount;
+  }
+
   return (
     <>
       <Layout />
