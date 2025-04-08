@@ -3,19 +3,21 @@
 import router from "next/navigation";
 import Layout from "../../components/Layout";
 import { FormEvent, useState } from "react";
-import { isAdmin } from "../../../func";
+import { isAdmin, updateUser } from "../../../func";
 
 
-export default function Modal({ email, name, admin, accepted, toggle}: { email: string, name: string, admin: boolean, accepted: boolean, toggle: React.Dispatch<React.SetStateAction<boolean>> }) {
+export default function Modal({ uid, id, type, email, name, admin, accepted, toggle}: {uid:string, id:string, type: string, email: string, name: string, admin: boolean, accepted: boolean, toggle: React.Dispatch<React.SetStateAction<boolean>> }) {
   const [inputEmail, setEmail] = useState(email)
   const [inputName, setName] = useState(name)
+  const [inputType, setType] = useState(type)
+  const [inputID, setID] = useState(id)
   const [inputAdmin, setAdmin] = useState(admin)
   const [inputAccepted, setAccepted] = useState(accepted)
 
-  function editUser(event: FormEvent<HTMLFormElement>) {
+  const editUser = async (event: React.FormEvent) => {
     event.preventDefault()
-    console.log(inputAdmin)
-    console.log(inputAccepted)
+    updateUser(uid, inputType, inputAdmin, inputID, inputName, null, inputAccepted)
+    toggle(false)
   }
   return (
     <>
@@ -46,11 +48,28 @@ export default function Modal({ email, name, admin, accepted, toggle}: { email: 
                 placeholder="Name"
                 className="w-full border-b-2 mr-5 my-5 pt-5 outline-0 border-b-gray-400 placeholder:text-gray-400 text-black"
               />
+              <input
+                type="text"
+                value={inputType}
+                onChange={(e) => setType(e.target.value)}
+                id="type"
+                placeholder="Type"
+                className="w-full border-b-2 mr-5 my-5 pt-5 outline-0 border-b-gray-400 placeholder:text-gray-400 text-black"
+              />
+              <input
+                type="text"
+                value={inputID}
+                onChange={(e) => setID(e.target.value)}
+                id="id"
+                placeholder="ID"
+                className="w-full border-b-2 mr-5 my-5 pt-5 outline-0 border-b-gray-400 placeholder:text-gray-400 text-black"
+              />
               <div className="[&>*]:inline-block">
                 <label htmlFor="admin" className="text-gray-400 w-2/6">Admin?</label>
                 <input
                   type="checkbox"
                   value={inputName}
+                  checked={inputAdmin}
                   onChange={(e) => setAdmin(e.target.checked)}
                   id="admin"
                   className="border-b-2 ml-5 my-5 pt-5 outline-0 border-b-gray-400 placeholder:text-gray-400 text-black"
@@ -61,6 +80,7 @@ export default function Modal({ email, name, admin, accepted, toggle}: { email: 
                 <input
                   type="checkbox"
                   value={inputName}
+                  checked={inputAccepted}
                   onChange={(e) => setAccepted(e.target.checked)}
                   id="accepted"
                   className="border-b-2 ml-5 my-5 pt-5 outline-0 border-b-gray-400 placeholder:text-gray-400 text-black"

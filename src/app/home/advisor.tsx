@@ -9,6 +9,7 @@ import { collection, doc, getDocs } from "firebase/firestore";
 import Modal from "./modal";
 
 interface User {
+  uid: string,
   accepted: boolean | null;
   admin: boolean | null;
   applied: boolean | null;
@@ -48,7 +49,7 @@ export default function Advisor() {
   return (
     <>
     {modal ? 
-    <Modal email={userInfo[dataIndex].email!!} name={userInfo[dataIndex].name!!} accepted={userInfo[dataIndex].accepted!!} admin={userInfo[dataIndex].admin!!} toggle={setModal}/>
+    <Modal uid={userInfo[dataIndex].uid} id={userInfo[dataIndex].id!!} type={userInfo[dataIndex].type!!} email={userInfo[dataIndex].email!!} name={userInfo[dataIndex].name!!} accepted={userInfo[dataIndex].accepted!!} admin={userInfo[dataIndex].admin!!} toggle={setModal}/>
     : null}
       <Layout />
       <div className="relative flex flex-col min-h-3/4 w-3/4  bg-white rounded-4xl transform-[translate(-50%,-50%)] top-1/2 left-1/2 row-span-2 overflow-hidden">
