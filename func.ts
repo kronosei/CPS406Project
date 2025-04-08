@@ -26,11 +26,12 @@ export async function getCollection() {
   const result = (await getDocs(collection(firestore, "users"))).docs.map(doc => {
     const data = doc.data()
     const info = {
+      uid: doc.id,
       accepted: data.accepted,
       admin: data.admin,
       applied: data.applied,
       id: data.id,
-      name: data.name, 
+      name: data.name,
       email: data.email,
       type: data.type
     };
@@ -110,13 +111,14 @@ export async function updateUser(
   const docRef = doc(firestore, "users", uid);
   if (type != "student") {
     updateDoc(docRef, { type: type, admin: admin });
-  } else
-    updateDoc(docRef, {
-      type: type,
-      admin: admin,
-      id: id == null ? deleteField() : id,
-      name: name == null ? deleteField() : name,
-      applied: applied == null ? deleteField() : applied,
-      accepted: accepted == null ? deleteField() : accepted,
-    });
+  } else {
+    const data: [string, any][] = []
+    data.push(['type', type])
+    data.push(['admin', admin])
+    if (id != null) data.push(['id', id])
+    if (name != null) data.push(['name', name])
+    if(applied != null) data.push(['applied', applied])
+    if(accepted != null) data.push(['accepted', accepted])
+    updateDoc(docRef, Object.fromEntries(data))
+  }
 }
