@@ -25,7 +25,7 @@ export default function Employer() {
 				setUID(user.uid);
 				console.log("User UID: ", userUID);
 			} else {
-				console.error("Cannot get User UID!");
+				console.log("Cannot get User UID!");
 			}
 			})
 	}, []);
