@@ -38,7 +38,7 @@ export default function Employer() {
   }
 
   return (
-    <>=
+    <>
       <Layout />
       <div className="relative flex flex-col min-h-3/4 w-3/4  bg-white rounded-4xl transform-[translate(-50%,-50%)] top-1/2 left-1/2 row-span-2 overflow-hidden">
         <button className="bg-red-500" onClick={(_) => collect()}>Refresh</button>
