@@ -44,22 +44,6 @@ export async function getCollection() {
   return result;
 }
 
-export async function getReportCollection() {
-  const result = (await getDocs(collection(firestore, "reports"))).docs.map(
-    (doc) => {
-      const data = doc.data();
-      const info = {
-        EmployerUID: data.EmployerUID,
-        Employer: data.Employer,
-        Student: data.Student,
-        Report: data.Report,
-      };
-      return info;
-    }
-  );
-  return result;
-}
-
 export async function getFilteredReportCollection(uid: string) {
   const reportCollection = collection(firestore, "reports");
   const filteredCollection = query(
@@ -104,6 +88,54 @@ export async function applied(uid: string) {
   return docSnap.data()?.applied;
 }
 
+export async function getStudentUID(studentID: string) {
+  const users = collection(firestore, "users");
+  const filteredCollection = query(
+    users,
+    where("id", "==", studentID)
+  );
+
+  let returnDocID = "";
+  try {
+    const querySnapshot = await getDocs(filteredCollection);
+    if (!querySnapshot.empty) {
+      const studentDoc = querySnapshot.docs[0];
+      returnDocID = studentDoc.id;
+    } else {
+      console.log("No matching Documents");
+    }
+  } catch(error) {
+    console.log("Error in finding a document");
+    returnDocID = "";
+  }
+  return returnDocID;
+}
+
+export async function updateUserEmployerEval(studentUID: string, inputEmployer: string, inputStudentName: string, inputStudentID: string, inputGrade: string, inputBehaviour: string, inputSkills: string, inputKnowledge: string, inputAttitude: string) {
+  const docRef = doc(firestore, "users", studentUID);
+
+  try {
+    await updateDoc(docRef, {
+      employer: inputEmployer,
+      employerEval: {
+        studentName: inputStudentName,
+        studentID: inputStudentID,
+        grade: inputGrade,
+        behaviour: inputBehaviour,
+        skills: inputSkills,
+        knowledge: inputKnowledge,
+        attitude: inputAttitude,
+      },
+    });
+    console.log("Document Uploaded Successfully");
+    return true;
+  } catch(error) {
+    console.log("Error in updating document: ", error);
+    return false;
+  }
+
+}
+
 export async function updateUser(
   uid: string,
   type: string,
@@ -111,7 +143,7 @@ export async function updateUser(
   id: string | null,
   employer: string | null = null,
   evaluation: string | null = null,
-  report: string | null = null,
+  grade: string | null = null,
   applied: boolean | null = null,
   accepted: boolean | null = null
 ) {

@@ -78,9 +78,9 @@ function Layout() {
             <>
               <Link
                 className="col-span-2 hover:font-bold transition-all delay-0 duration-300"
-                href="/workReport"
+                href="/employerEvaluation"
               >
-                Submit a Work Report
+                Submit an Employer Evaluation
               </Link>
             </>
           )}
