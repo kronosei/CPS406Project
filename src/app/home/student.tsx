@@ -14,6 +14,7 @@ export default function Student() {
   const router = useRouter();
   let acc: User | null = null;
   const [appStatus, setAppStatus] = useState(false);
+  const [submittedForm, setSubmittedForm] = useState("")
   const [formData, setFormData] = useState({
     workTerm: "",
     description: "",
@@ -36,7 +37,7 @@ export default function Student() {
     event.preventDefault();
     if (acc) {
       if (inputID) {
-        updateUser(acc.uid, "student", false, inputID, true, false);
+        updateUser(acc.uid, "student", false, inputID, null, null, null, true, false);
         router.replace("/home");
       } else {
         setError("You must include both your name and student ID!");
@@ -46,10 +47,15 @@ export default function Student() {
 
   async function submitWorkReport(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const docRef = doc(firestore, "users", acc!.uid);
-    updateDoc(docRef, { report: arrayUnion(formData) });
-    const data = await getData(acc!!.uid);
-    console.log(data);
+    if(formData.workTerm && formData.description){
+      const docRef = doc(firestore, "users", acc!.uid);
+      updateDoc(docRef, { report: arrayUnion(formData) });
+      const data = await getData(acc!!.uid);
+      setSubmittedForm("Submitted Form!")
+      console.log(submittedForm)
+    } else{
+      setError("Fill In All Fields!")
+    }
   }
   return (
     <>
@@ -106,10 +112,10 @@ export default function Student() {
             className={
               error
                 ? "text-red-500 self-center text-lg text-center p-10 font-bold"
-                : "self-center text-lg p-10 invisible"
+                : submittedForm ? "text-green-500 self-center text-lg text-center p-10 font-bold" : "self-center text-lg p-10 invisible"
             }
           >
-            {error}
+            {error ? error : submittedForm ? submittedForm : null}
           </span>
           <div className="flex flex-col">
             <form
@@ -126,7 +132,7 @@ export default function Student() {
                 placeholder="Work Term"
                 onFocus={(_) => {
                   setError("");
-                  setID("");
+                  setSubmittedForm("")
                 }}
                 className="w-full border-b-2 mr-5 my-5 pt-5 outline-0 border-b-gray-400 placeholder:text-gray-400 text-black"
               />
@@ -143,7 +149,7 @@ export default function Student() {
                 placeholder="Description"
                 onFocus={(_) => {
                   setError("");
-                  setID("");
+                  setSubmittedForm("")
                 }}
                 className="w-full border-b-2 mr-5 my-5 pt-5 outline-0 border-b-gray-400 placeholder:text-gray-400 text-black"
               />

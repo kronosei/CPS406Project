@@ -24,7 +24,7 @@ interface User {
   type: string | null;
   employer: string | null;
   evaluation: string | null;
-  report: report[];
+  report: report[] | [];
 }
 
 export default function Advisor() {
@@ -147,7 +147,9 @@ export default function Advisor() {
                 <td>{user.id}</td>
                 <td>{user.employer}</td>
                 <td>{user.evaluation}</td>
-                <td>{"Hi"}</td>
+                {Array.isArray(user.report) ? user.report.map((report, j) => (
+                  <td key={-j}>{`Work Term: ${report.workTerm}\n Description: ${report.description}`}</td>
+                )) : null}
               </tr>
             ))}
           </tbody>
@@ -156,3 +158,5 @@ export default function Advisor() {
     </>
   );
 }
+
+
