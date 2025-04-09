@@ -36,7 +36,7 @@ export default function EmployerEvaluation() {
 		if (studentUID=="") {
 			setError(true);
 		} else {
-			const status = await updateUserEmployerEval(studentUID, inputEmployer, inputStudentName, inputStudentID, inputGrade, inputBehaviour, inputSkills, inputKnowledge, inputAttitude);
+			const status = await updateUserEmployerEval(studentUID, userUID, inputEmployer, inputStudentName, inputStudentID, inputGrade, inputBehaviour, inputSkills, inputKnowledge, inputAttitude);
 			if (status==true) {
 				setSuccess(true);
 			} else {

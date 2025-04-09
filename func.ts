@@ -45,7 +45,7 @@ export async function getCollection() {
 }
 
 export async function getFilteredReportCollection(uid: string) {
-  const reportCollection = collection(firestore, "reports");
+  const reportCollection = collection(firestore, "users");
   const filteredCollection = query(
     reportCollection,
     where("EmployerUID", "==", uid)
@@ -111,12 +111,13 @@ export async function getStudentUID(studentID: string) {
   return returnDocID;
 }
 
-export async function updateUserEmployerEval(studentUID: string, inputEmployer: string, inputStudentName: string, inputStudentID: string, inputGrade: string, inputBehaviour: string, inputSkills: string, inputKnowledge: string, inputAttitude: string) {
+export async function updateUserEmployerEval(studentUID: string, employerUID: string, inputEmployer: string, inputStudentName: string, inputStudentID: string, inputGrade: string, inputBehaviour: string, inputSkills: string, inputKnowledge: string, inputAttitude: string) {
   const docRef = doc(firestore, "users", studentUID);
 
   try {
     await updateDoc(docRef, {
       employer: inputEmployer,
+      employerUID: employerUID,
       employerEval: {
         studentName: inputStudentName,
         studentID: inputStudentID,
