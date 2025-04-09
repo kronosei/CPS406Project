@@ -9,7 +9,6 @@ import { applied, getType, isAccepted, updateUser } from "../../../func";
 import Student from "./student";
 import Advisor from "./advisor";
 import Employer from "./employer";
-import Modal from "./modal";
 
 export default function Home() {
   const router = useRouter();

@@ -16,8 +16,8 @@ export default function Student() {
   const [appStatus, setAppStatus] = useState(false);
   const [formData, setFormData] = useState({
     workTerm: "",
-    description: ""
-  })
+    description: "",
+  });
   auth.onAuthStateChanged(async (user) => {
     if (user) {
       acc = user;
@@ -36,7 +36,7 @@ export default function Student() {
     event.preventDefault();
     if (acc) {
       if (inputID) {
-        updateUser(acc.uid, "student", false, inputID, null, null, null, true, false);
+        updateUser(acc.uid, "student", false, inputID, true, false);
         router.replace("/home");
       } else {
         setError("You must include both your name and student ID!");
@@ -44,13 +44,12 @@ export default function Student() {
     }
   }
 
-  async function submitWorkReport(event: FormEvent<HTMLFormElement>){
-    event.preventDefault()
+  async function submitWorkReport(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
     const docRef = doc(firestore, "users", acc!.uid);
-    updateDoc(docRef, {report: arrayUnion(formData)})
-    const data = await getData(acc!!.uid)
-    console.log(data)
-    
+    updateDoc(docRef, { report: arrayUnion(formData) });
+    const data = await getData(acc!!.uid);
+    console.log(data);
   }
   return (
     <>
@@ -100,53 +99,60 @@ export default function Student() {
 
       {appStatus && (
         <div className="relative flex flex-col min-h-3/4 sm:w-1/2 md:w-1/2 lg:w-2/5 xl:w-1/3 2xl:w-1/4 w-3/4 bg-white rounded-4xl transform-[translate(-50%,-50%)] top-1/2 left-1/2">
-        <span className="text-black self-center text-3xl md:text-2xl font-bold pt-32 text-center">
-          Submit A Work Term Report
-        </span>
-        <span
-          className={
-            error
-              ? "text-red-500 self-center text-lg text-center p-10 font-bold"
-              : "self-center text-lg p-10 invisible"
-          }
-        >
-          {error}
-        </span>
-        <div className="flex flex-col">
-          <form
-            onSubmit={submitWorkReport}
-            className="[&>*]:block rounded-sm h-1/4 w-3/4 justify-center self-center content-center"
+          <span className="text-black self-center text-3xl md:text-2xl font-bold pt-32 text-center">
+            Submit A Work Term Report
+          </span>
+          <span
+            className={
+              error
+                ? "text-red-500 self-center text-lg text-center p-10 font-bold"
+                : "self-center text-lg p-10 invisible"
+            }
           >
-            <input
-              type="text"
-              value={formData.workTerm}
-              onChange={(e) => setFormData(prev => ({...prev, workTerm: e.target.value}))}
-              id="text"
-              placeholder="Work Term"
-              onFocus={(_) => {
-                setError("");
-                setID("");
-              }}
-              className="w-full border-b-2 mr-5 my-5 pt-5 outline-0 border-b-gray-400 placeholder:text-gray-400 text-black"
-            />
-            <input
-              type="text"
-              value={formData.description}
-              onChange={(e) => setFormData(prev => ({...prev, description: e.target.value}))}
-              id="text"
-              placeholder="Description"
-              onFocus={(_) => {
-                setError("");
-                setID("");
-              }}
-              className="w-full border-b-2 mr-5 my-5 pt-5 outline-0 border-b-gray-400 placeholder:text-gray-400 text-black"
-            />
-            <button type="submit" className="bg-gray-800 p-5 mt-16 w-full">
-              Submit
-            </button>
-          </form>
+            {error}
+          </span>
+          <div className="flex flex-col">
+            <form
+              onSubmit={submitWorkReport}
+              className="[&>*]:block rounded-sm h-1/4 w-3/4 justify-center self-center content-center"
+            >
+              <input
+                type="text"
+                value={formData.workTerm}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, workTerm: e.target.value }))
+                }
+                id="text"
+                placeholder="Work Term"
+                onFocus={(_) => {
+                  setError("");
+                  setID("");
+                }}
+                className="w-full border-b-2 mr-5 my-5 pt-5 outline-0 border-b-gray-400 placeholder:text-gray-400 text-black"
+              />
+              <input
+                type="text"
+                value={formData.description}
+                onChange={(e) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    description: e.target.value,
+                  }))
+                }
+                id="text"
+                placeholder="Description"
+                onFocus={(_) => {
+                  setError("");
+                  setID("");
+                }}
+                className="w-full border-b-2 mr-5 my-5 pt-5 outline-0 border-b-gray-400 placeholder:text-gray-400 text-black"
+              />
+              <button type="submit" className="bg-gray-800 p-5 mt-16 w-full">
+                Submit
+              </button>
+            </form>
+          </div>
         </div>
-      </div>
       )}
     </>
   );

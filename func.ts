@@ -12,7 +12,6 @@ import {
   where,
 } from "firebase/firestore";
 import { auth, firestore } from "./index";
-import User from "./src/app/home/advisor";
 
 export async function getData(uid: string) {
   const docRef = doc(firestore, "users", uid);
@@ -20,8 +19,21 @@ export async function getData(uid: string) {
   return docSnap.data();
 }
 
-export async function getCollection() {
-  const q = query(collection(firestore, "users"), where("type", "!=", ""));
+export async function getFilterCollection(filtering: number, searchID: string) {
+  let q = query(collection(firestore, "users"), where("type", "==", "student"));
+
+  /* Filter on the search bar and filter option
+  if (filtering == 1) {
+    q = query(q, where("employer", "!=", ""));
+  } else if (filtering == -1) {
+    q = query(q, where("employer", "==", ""));
+  }
+
+  if (searchID != "") {
+    const end = searchID + "\uf8ff";
+    q = query(q, where("id", ">=", searchID), where("id", "<=", end));
+  }*/
+
   const querySnapshot = await getDocs(q);
 
   const result = querySnapshot.docs.map((doc) => {
@@ -90,10 +102,7 @@ export async function applied(uid: string) {
 
 export async function getStudentUID(studentID: string) {
   const users = collection(firestore, "users");
-  const filteredCollection = query(
-    users,
-    where("id", "==", studentID)
-  );
+  const filteredCollection = query(users, where("id", "==", studentID));
 
   let returnDocID = "";
   try {
@@ -104,14 +113,25 @@ export async function getStudentUID(studentID: string) {
     } else {
       console.log("No matching Documents");
     }
-  } catch(error) {
+  } catch (error) {
     console.log("Error in finding a document");
     returnDocID = "";
   }
   return returnDocID;
 }
 
-export async function updateUserEmployerEval(studentUID: string, employerUID: string, inputEmployer: string, inputStudentName: string, inputStudentID: string, inputGrade: string, inputBehaviour: string, inputSkills: string, inputKnowledge: string, inputAttitude: string) {
+export async function updateUserEmployerEval(
+  studentUID: string,
+  employerUID: string,
+  inputEmployer: string,
+  inputStudentName: string,
+  inputStudentID: string,
+  inputGrade: string,
+  inputBehaviour: string,
+  inputSkills: string,
+  inputKnowledge: string,
+  inputAttitude: string
+) {
   const docRef = doc(firestore, "users", studentUID);
 
   try {
@@ -130,11 +150,10 @@ export async function updateUserEmployerEval(studentUID: string, employerUID: st
     });
     console.log("Document Uploaded Successfully");
     return true;
-  } catch(error) {
+  } catch (error) {
     console.log("Error in updating document: ", error);
     return false;
   }
-
 }
 
 export async function updateUser(
