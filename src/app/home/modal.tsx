@@ -33,7 +33,7 @@ export default function Modal({
 
   const editUser = async (event: React.FormEvent) => {
     event.preventDefault();
-    updateUser(uid, inputType, inputAdmin, inputID, null, inputAccepted);
+    updateUser(uid, inputType, inputAdmin, inputID, null, null, null, null, inputAccepted);
     toggle(false);
   };
   return (
