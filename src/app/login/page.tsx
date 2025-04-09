@@ -87,6 +87,12 @@ export default function Login() {
           </form>
         </div>
         <div className="p-10 self-center text-center">
+        <span
+            className="text-gray-500 cursor-default hover:underline block pb-5"
+            onClick={(_) => router.push("/reset")}
+          >
+            Forgot Password? Click Here!
+          </span>
           <span
             className="text-gray-500 cursor-pointer hover:underline"
             onClick={(_) => router.push("/register")}
