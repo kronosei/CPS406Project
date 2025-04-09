@@ -13,7 +13,7 @@ function Layout() {
     auth.onAuthStateChanged(async (user) => {
       if (user) {
         setIsAuthenticated(true);
-        setUserType(await getType(user.uid))
+        setUserType(await getType(user.uid));
       } else {
         setIsAuthenticated(false);
       }
@@ -46,7 +46,7 @@ function Layout() {
                 className="col-span-1 hover:font-bold transition-all delay-0 duration-300"
                 href="/"
               >
-                Homepage
+                Home
               </Link>
               <Link
                 className="col-span-1 hover:font-bold transition-all delay-0 duration-300"
@@ -73,8 +73,8 @@ function Layout() {
               </Link>
             </>
           )}
-          
-          {isAuthenticated && userType=="employer" && (
+
+          {isAuthenticated && userType == "employer" && (
             <>
               <Link
                 className="col-span-2 hover:font-bold transition-all delay-0 duration-300"

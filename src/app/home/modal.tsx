@@ -5,24 +5,47 @@ import Layout from "../../components/Layout";
 import { FormEvent, useState } from "react";
 import { isAdmin, updateUser } from "../../../func";
 
-
-export default function Modal({ uid, id, type, email, name, admin, accepted, toggle}: {uid:string, id:string, type: string, email: string, name: string, admin: boolean, accepted: boolean, toggle: React.Dispatch<React.SetStateAction<boolean>> }) {
-  const [inputEmail, setEmail] = useState(email)
-  const [inputName, setName] = useState(name)
-  const [inputType, setType] = useState(type)
-  const [inputID, setID] = useState(id)
-  const [inputAdmin, setAdmin] = useState(admin)
-  const [inputAccepted, setAccepted] = useState(accepted)
+export default function Modal({
+  uid,
+  id,
+  type,
+  email,
+  name,
+  admin,
+  accepted,
+  toggle,
+}: {
+  uid: string;
+  id: string;
+  type: string;
+  email: string;
+  name: string;
+  admin: boolean;
+  accepted: boolean;
+  toggle: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
+  const [inputEmail, setEmail] = useState(email);
+  const [inputName, setName] = useState(name);
+  const [inputType, setType] = useState(type);
+  const [inputID, setID] = useState(id);
+  const [inputAdmin, setAdmin] = useState(admin);
+  const [inputAccepted, setAccepted] = useState(accepted);
 
   const editUser = async (event: React.FormEvent) => {
-    event.preventDefault()
-    updateUser(uid, inputType, inputAdmin, inputID, inputName, null, inputAccepted)
-    toggle(false)
-  }
+    event.preventDefault();
+    updateUser(uid, inputType, inputAdmin, inputID, null, inputAccepted);
+    toggle(false);
+  };
   return (
     <>
-      <div className="absolute w-screen h-screen bg-black z-10" onClick={(_) => toggle(false)}>
-        <div className="relative flex flex-col min-h-3/4 sm:w-1/2 md:w-1/2 lg:w-2/5 xl:w-1/3 2xl:w-1/4 w-3/4 bg-white rounded-4xl transform-[translate(-50%,-50%)] top-1/2 left-1/2" onClick={(e) => e.stopPropagation()}>
+      <div
+        className="absolute w-screen h-screen bg-black z-10"
+        onClick={(_) => toggle(false)}
+      >
+        <div
+          className="relative flex flex-col min-h-3/4 sm:w-1/2 md:w-1/2 lg:w-2/5 xl:w-1/3 2xl:w-1/4 w-3/4 bg-white rounded-4xl transform-[translate(-50%,-50%)] top-1/2 left-1/2"
+          onClick={(e) => e.stopPropagation()}
+        >
           <span className="text-black self-center text-4xl font-bold pt-20">
             User Data
           </span>
@@ -38,7 +61,9 @@ export default function Modal({ uid, id, type, email, name, admin, accepted, tog
                 onChange={(e) => setEmail(e.target.value)}
                 id="username"
                 placeholder="Email"
-                className={"w-full border-b-2 mr-5 my-5 outline-0 border-b-gray-400 placeholder:text-gray-400 text-black"}
+                className={
+                  "w-full border-b-2 mr-5 my-5 outline-0 border-b-gray-400 placeholder:text-gray-400 text-black"
+                }
               />
               <input
                 type="text"
@@ -61,11 +86,13 @@ export default function Modal({ uid, id, type, email, name, admin, accepted, tog
                 value={inputID}
                 onChange={(e) => setID(e.target.value)}
                 id="id"
-                placeholder="ID"
+                placeholder="Student ID"
                 className="w-full border-b-2 mr-5 my-5 pt-5 outline-0 border-b-gray-400 placeholder:text-gray-400 text-black"
               />
               <div className="[&>*]:inline-block">
-                <label htmlFor="admin" className="text-gray-400 w-2/6">Admin?</label>
+                <label htmlFor="admin" className="text-gray-400 w-2/6">
+                  Admin?
+                </label>
                 <input
                   type="checkbox"
                   value={inputName}
@@ -76,7 +103,9 @@ export default function Modal({ uid, id, type, email, name, admin, accepted, tog
                 />
               </div>
               <div className="[&>*]:inline-block">
-                <label htmlFor="accepted" className="text-gray-400 w-2/6">Accepted?</label>
+                <label htmlFor="accepted" className="text-gray-400 w-2/6">
+                  Accepted?
+                </label>
                 <input
                   type="checkbox"
                   value={inputName}
@@ -86,15 +115,17 @@ export default function Modal({ uid, id, type, email, name, admin, accepted, tog
                   className="border-b-2 ml-5 my-5 pt-5 outline-0 border-b-gray-400 placeholder:text-gray-400 text-black"
                 />
               </div>
-              <button type="submit" className="bg-gray-800 p-5 mt-16 w-full hover:bg-gray-600">
+              <button
+                type="submit"
+                className="bg-gray-800 p-5 mt-16 w-full hover:bg-gray-600"
+              >
                 Submit
               </button>
             </form>
           </div>
-          <div className="p-10 self-center text-center">
-          </div>
+          <div className="p-10 self-center text-center"></div>
         </div>
       </div>
     </>
-  )
+  );
 }

@@ -10,15 +10,17 @@ import Layout from "../../components/Layout";
 export default function Login() {
   const [inputEmail, setEmail] = useState("");
   const [inputPass, setPass] = useState("");
+  const [inputName, setName] = useState("");
   const [type, setType] = useState(-1);
   const [error, setError] = useState("");
   const router = useRouter();
   //Checks if the user is signed in.
   auth.onAuthStateChanged((user) => {
     if (user) {
-      router.replace("/home", {scroll: false});
+      router.replace("/home", { scroll: false });
     }
   });
+
   async function checkUser(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const users = collection(firestore, "users");
@@ -28,7 +30,6 @@ export default function Login() {
         id = userCredentials.user.uid;
       })
       .catch((e) => {
-        console.error("Firebase error:", e.code, e.message);
         switch (e.code) {
           case "auth/email-already-in-use":
             setError("Email already in use!");
@@ -38,37 +39,41 @@ export default function Login() {
             break;
         }
       });
-    try{
+    try {
       switch (type) {
         case 1:
           setDoc(doc(users, id), {
-          type: "student",
-          email: inputEmail,
-          admin: false,
-        });
-        break;
+            name: inputName,
+            type: "student",
+            email: inputEmail,
+            admin: false,
+          });
+          break;
         case 2:
           setDoc(doc(users, id), {
-          type: "employer",
-          email: inputEmail,
-          admin: false,
-        });
-        break;
+            name: inputName,
+            type: "employer",
+            email: inputEmail,
+            admin: false,
+          });
+          break;
         case 3:
-        setDoc(doc(users, id), {
-          type: "advisor",
-          email: inputEmail,
-          admin: false,
-        });
-        break;
-      default:
-        setError("Select a user type!");
-        return;
+          setDoc(doc(users, id), {
+            name: inputName,
+            type: "advisor",
+            email: inputEmail,
+            admin: false,
+          });
+          break;
+        default:
+          setError("Select a user type!");
+          return;
       }
-    } catch{
-      setError("Invalid email or password!")
+    } catch {
+      setError("Invalid email or password!");
     }
   }
+
   return (
     <>
       <Layout />
@@ -79,8 +84,8 @@ export default function Login() {
         <span
           className={
             error
-            ? "text-red-500 self-center text-lg p-5 font-bold"
-            : "self-center text-lg p-5 invisible"
+              ? "text-red-500 self-center text-lg p-5 font-bold"
+              : "self-center text-lg p-5 invisible"
           }
         >
           {error}
@@ -92,13 +97,27 @@ export default function Login() {
           >
             <input
               type="text"
+              value={inputName}
+              onChange={(e) => setName(e.target.value)}
+              id="name"
+              placeholder="Full Name"
+              onFocus={(_) => {
+                setError("");
+              }}
+              className={`w-full border-b-2 mr-5 my-5 outline-0 ${
+                !error
+                  ? "border-b-gray-400 placeholder:text-gray-400 text-black"
+                  : "border-b-red-500 placeholder:text-red-500 text-red-300"
+              }`}
+            />
+            <input
+              type="text"
               value={inputEmail}
               onChange={(e) => setEmail(e.target.value)}
               id="username"
               placeholder="Email"
               onFocus={(_) => {
                 setError("");
-                setEmail("");
               }}
               className={`w-full border-b-2 mr-5 my-5 outline-0 ${
                 !error
@@ -114,16 +133,19 @@ export default function Login() {
               placeholder="Password"
               onFocus={(_) => {
                 setError("");
-                setPass("");
               }}
-              className={`w-full border-b-2 mr-5 my-5 pt-5 outline-0 ${
+              className={`w-full border-b-2 mr-5 my-5 outline-0 ${
                 !error
                   ? "border-b-gray-400 placeholder:text-gray-400 text-black"
                   : "border-b-red-500 placeholder:text-red-500 text-red-300"
               }`}
             />
             <div id="type" className="pt-5 w-full" style={{ display: "flex" }}>
-              <div className="flex-1 bg-gray-800 mr-1 py-8 text-center relative hover:bg-gray-700 focus-within:bg-gray-600">
+              <div
+                className={`flex-1 ${
+                  type === 1 ? "bg-gray-600" : "bg-gray-800"
+                } mr-1 py-8 text-center relative hover:bg-gray-700`}
+              >
                 <input
                   type="radio"
                   name="type"
@@ -133,7 +155,11 @@ export default function Login() {
                 />
                 Student
               </div>
-              <div className="flex-1 bg-gray-800 mr-1 py-8 text-center relative hover:bg-gray-700 focus-within:bg-gray-600">
+              <div
+                className={`flex-1 ${
+                  type === 2 ? "bg-gray-600" : "bg-gray-800"
+                } mr-1 py-8 text-center relative hover:bg-gray-700`}
+              >
                 <input
                   type="radio"
                   name="type"
@@ -143,7 +169,11 @@ export default function Login() {
                 />
                 Employer
               </div>
-              <div className="flex-1 bg-gray-800 mr-1 py-8 text-center relative hover:bg-gray-700 focus-within:bg-gray-600">
+              <div
+                className={`flex-1 ${
+                  type === 3 ? "bg-gray-600" : "bg-gray-800"
+                } mr-1 py-8 text-center relative hover:bg-gray-700`}
+              >
                 <input
                   type="radio"
                   name="type"
@@ -154,14 +184,17 @@ export default function Login() {
                 Advisor
               </div>
             </div>
-            <button type="submit" className="bg-gray-800 p-5 mt-10 w-full hover:bg-gray-700">
+            <button
+              type="submit"
+              className="bg-gray-800 p-5 mt-10 w-full hover:bg-gray-700"
+            >
               Submit
             </button>
           </form>
         </div>
         <div className="p-10 self-center text-center">
           <span
-            className="text-gray-500 cursor-default hover:underline"
+            className="text-gray-500 cursor-pointer hover:underline"
             onClick={(_) => router.replace("/login")}
           >
             Already have an account? Click here!

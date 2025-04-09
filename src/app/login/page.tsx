@@ -6,23 +6,22 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import Layout from "../../components/Layout";
 
-
 export default function Login() {
   const [inputEmail, setEmail] = useState("");
   const [inputPass, setPass] = useState("");
   const [error, setError] = useState(false);
   const router = useRouter();
   //Checks if the user is signed in.
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        router.replace("/home", {scroll: false});
-      } 
-    });
-    function checkUser(event: FormEvent<HTMLFormElement>) {
-      event.preventDefault();
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      router.replace("/home", { scroll: false });
+    }
+  });
+  function checkUser(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
     signInWithEmailAndPassword(auth, inputEmail, inputPass)
-    .then(() => {
-        router.replace("/home", {scroll: false});
+      .then(() => {
+        router.replace("/home", { scroll: false });
       })
       .catch((e) => {
         setError(true);
@@ -57,11 +56,10 @@ export default function Login() {
               placeholder="Email"
               onFocus={(_) => {
                 setError(false);
-                setEmail("");
               }}
               className={`w-full border-b-2 mr-5 my-5 outline-0 ${
                 !error
-                ? "border-b-gray-400 placeholder:text-gray-400 text-black"
+                  ? "border-b-gray-400 placeholder:text-gray-400 text-black"
                   : "border-b-red-500 placeholder:text-red-500 text-red-300"
               }`}
             />
@@ -73,7 +71,6 @@ export default function Login() {
               placeholder="Password"
               onFocus={(_) => {
                 setError(false);
-                setPass("");
               }}
               className={`w-full border-b-2 mr-5 my-5 pt-5 outline-0 ${
                 !error
@@ -81,14 +78,17 @@ export default function Login() {
                   : "border-b-red-500 placeholder:text-red-500 text-red-300"
               }`}
             />
-            <button type="submit" className="bg-gray-800 p-5 mt-16 w-full hover:bg-gray-600">
+            <button
+              type="submit"
+              className="bg-gray-800 p-5 mt-16 w-full hover:bg-gray-600"
+            >
               Submit
             </button>
           </form>
         </div>
         <div className="p-10 self-center text-center">
           <span
-            className="text-gray-500 cursor-default hover:underline"
+            className="text-gray-500 cursor-pointer hover:underline"
             onClick={(_) => router.push("/register")}
           >
             Need an account? Click here!
@@ -98,5 +98,3 @@ export default function Login() {
     </>
   );
 }
-
-

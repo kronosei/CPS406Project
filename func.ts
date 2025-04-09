@@ -9,23 +9,24 @@ import {
   QueryDocumentSnapshot,
   updateDoc,
   query,
-  where
+  where,
 } from "firebase/firestore";
 import { auth, firestore } from "./index";
-
-//These functions can only be used in async functions!
+import User from "./src/app/home/advisor";
 
 export async function getData(uid: string) {
-  //Untested
   const docRef = doc(firestore, "users", uid);
   const docSnap = await getDoc(docRef);
-  return docSnap.data()
+  return docSnap.data();
 }
 
 export async function getCollection() {
-  const result = (await getDocs(collection(firestore, "users"))).docs.map(doc => {
-    const data = doc.data()
-    const info = {
+  const q = query(collection(firestore, "users"), where("type", "!=", ""));
+  const querySnapshot = await getDocs(q);
+
+  const result = querySnapshot.docs.map((doc) => {
+    const data = doc.data();
+    return {
       uid: doc.id,
       accepted: data.accepted,
       admin: data.admin,
@@ -33,46 +34,50 @@ export async function getCollection() {
       id: data.id,
       name: data.name,
       email: data.email,
-      type: data.type
+      type: data.type,
+      employer: data.employer,
+      evaluation: data.evaluation,
+      report: data.report,
     };
-    return info
-  }
-  )
+  });
 
-  return result
+  return result;
 }
 
 export async function getReportCollection() {
-  const result = (await getDocs(collection(firestore, "reports"))).docs.map(doc => {
-    const data = doc.data()
-    const info = {
-      EmployerUID: data.EmployerUID,
-      Employer: data.Employer,
-      Student: data.Student,
-      Report: data.Report
-    };
-    return info
-  }
-  )
-  return result
+  const result = (await getDocs(collection(firestore, "reports"))).docs.map(
+    (doc) => {
+      const data = doc.data();
+      const info = {
+        EmployerUID: data.EmployerUID,
+        Employer: data.Employer,
+        Student: data.Student,
+        Report: data.Report,
+      };
+      return info;
+    }
+  );
+  return result;
 }
 
 export async function getFilteredReportCollection(uid: string) {
   const reportCollection = collection(firestore, "reports");
-  const filteredCollection = query(reportCollection, where("EmployerUID", "==", uid));
+  const filteredCollection = query(
+    reportCollection,
+    where("EmployerUID", "==", uid)
+  );
 
-  const result = (await getDocs(filteredCollection)).docs.map(doc => {
-    const data = doc.data()
+  const result = (await getDocs(filteredCollection)).docs.map((doc) => {
+    const data = doc.data();
     const info = {
       EmployerUID: data.EmployerUID,
       Employer: data.Employer,
       Student: data.Student,
-      Report: data.Report
+      Report: data.Report,
     };
-    return info
-  }
-  )
-  return result
+    return info;
+  });
+  return result;
 }
 
 export async function getType(uid: string) {
@@ -103,8 +108,10 @@ export async function updateUser(
   uid: string,
   type: string,
   admin: boolean,
-  id: string | null = null,
-  name: string | null = null,
+  id: string | null,
+  employer: string | null = null,
+  evaluation: string | null = null,
+  report: string | null = null,
   applied: boolean | null = null,
   accepted: boolean | null = null
 ) {
@@ -112,13 +119,12 @@ export async function updateUser(
   if (type != "student") {
     updateDoc(docRef, { type: type, admin: admin });
   } else {
-    const data: [string, any][] = []
-    data.push(['type', type])
-    data.push(['admin', admin])
-    if (id != null) data.push(['id', id])
-    if (name != null) data.push(['name', name])
-    if(applied != null) data.push(['applied', applied])
-    if(accepted != null) data.push(['accepted', accepted])
-    updateDoc(docRef, Object.fromEntries(data))
+    const data: [string, any][] = [];
+    data.push(["type", type]);
+    data.push(["admin", admin]);
+    if (id != null) data.push(["id", id]);
+    if (applied != null) data.push(["applied", applied]);
+    if (accepted != null) data.push(["accepted", accepted]);
+    updateDoc(docRef, Object.fromEntries(data));
   }
 }
