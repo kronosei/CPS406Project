@@ -8,7 +8,7 @@ import {getFilteredReportCollection} from "../../../func";
 import { collection, doc, getDocs } from "firebase/firestore";
 import Modal from "./modal";
 
-interface Report {
+interface Evaluation {
     studentName: string;
     grade: string;
     behaviour: string;
@@ -18,7 +18,7 @@ interface Report {
 }
 
 export default function Employer() {
-  const [reportInfo, setReportInfo] = useState<Report[]>([])
+  const [reportInfo, setReportInfo] = useState<Evaluation[]>([])
 	const [userUID, setUID] = useState("");
   
 	useEffect(() => {

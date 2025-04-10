@@ -13,6 +13,15 @@ interface report {
   description: string;
 }
 
+interface evaluation {
+  studentName: string;
+  grade: string;
+  behaviour: string;
+  skills: string;
+  knowledge: string;
+  attitude: string;
+}
+
 interface User {
   uid: string;
   accepted: boolean | null;
@@ -23,7 +32,7 @@ interface User {
   email: string | null;
   type: string | null;
   employer: string | null;
-  evaluation: string | null;
+  evaluation: evaluation | null;
   report: report[] | [];
 }
 
@@ -121,32 +130,32 @@ export default function Advisor() {
             </button>
           </div>
         </div>
-        <table>
+        <table className="table-auto w-auto">
           <thead className="[&>*]:bg-black">
-            <tr className="[&>*]:border-2 [&>*]:border-gray-800 [&>*]:p-2 [&>*]:text-left">
-              <th>Name</th>
-              <th>Email</th>
-              <th>Student ID</th>
-              <th>Employer</th>
-              <th>Evaluation</th>
-              <th>Report</th>
+            <tr className="[&>*]:border-2 [&>*]:border-gray-800 [&>*]:text-center">
+              <th className="p-2">Name</th>
+              <th className="p-2">Email</th>
+              <th className="p-2">Student ID</th>
+              <th className="p-2">Employer</th>
+              <th className="p-2 pl-10 pr-10">Evaluation</th>
+              <th className="p-2">Report</th>
             </tr>
           </thead>
           <tbody className="[&>*]:bg-black">
             {userInfo.map((user, i) => (
               <tr
                 key={i}
-                className="[&>*]:border-2 [&>*]:border-gray-800 [&>*]:p-2 [&>*]:text-left"
+                className="[&>*]:border-2 [&>*]:border-gray-800"
                 onClick={() => {
                   setDataIndex(i);
                   setModal(true);
                 }}
               >
-                <td>{user.name}</td>
-                <td>{user.email}</td>
-                <td>{user.id}</td>
-                <td>{user.employer}</td>
-                <td>{user.evaluation}</td>
+                {(user.name!=null) ? <td className="text-center p-2">{user.name}</td>:<td className="text-center">N/A</td>}
+                <td className="text-center p-2">{user.email}</td>
+                {(user.id!=null) ? <td className="text-center p-2">{user.id}</td>:<td className="text-center">N/A</td>}
+                {(user.employer!=null) ? <td className="text-center p-2">{user.employer}</td>:<td className="text-center">N/A</td>}
+                {(user.evaluation!=null) ? <td>{`Grade: ${user.evaluation.grade}`}<br/><br/>{`Behaviour: ${user.evaluation.behaviour}`}<br/><br/>{`Skills: ${user.evaluation.skills}`}<br/><br/>{`Knowledge: ${user.evaluation.knowledge}`}<br/><br/>{`Attitude: ${user.evaluation.attitude}`}</td>:<td className="text-center">N/A</td>}
                 {Array.isArray(user.report) ? user.report.map((report, j) => (
                   <td key={-j}>{`Work Term: ${report.workTerm}\n Description: ${report.description}`}</td>
                 )) : null}

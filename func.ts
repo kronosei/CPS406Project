@@ -22,7 +22,7 @@ export async function getData(uid: string) {
 export async function getFilterCollection(filtering: number, searchID: string) {
   let q = query(collection(firestore, "users"), where("type", "==", "student"));
 
-  /* Filter on the search bar and filter option
+  //Filter on the search bar and filter option
   if (filtering == 1) {
     q = query(q, where("employer", "!=", ""));
   } else if (filtering == -1) {
@@ -32,7 +32,7 @@ export async function getFilterCollection(filtering: number, searchID: string) {
   if (searchID != "") {
     const end = searchID + "\uf8ff";
     q = query(q, where("id", ">=", searchID), where("id", "<=", end));
-  }*/
+  }
 
   const querySnapshot = await getDocs(q);
 
@@ -48,7 +48,7 @@ export async function getFilterCollection(filtering: number, searchID: string) {
       email: data.email,
       type: data.type,
       employer: data.employer,
-      evaluation: data.evaluation,
+      evaluation: data.employerEval,
       report: data.report,
     };
   });
