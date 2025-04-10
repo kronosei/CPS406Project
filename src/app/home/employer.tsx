@@ -9,10 +9,12 @@ import { collection, doc, getDocs } from "firebase/firestore";
 import Modal from "./modal";
 
 interface Report {
-    EmployerUID: string;
-    Employer: string;
-    Student: string;
-    Report: string;
+    studentName: string;
+    grade: string;
+    behaviour: string;
+    skills: string;
+    knowledge: string;
+    attitude: string;
 }
 
 export default function Employer() {
@@ -45,17 +47,23 @@ export default function Employer() {
         <table>
           <thead className="[&>*]:bg-black">
           <tr className="[&>*]:border-2 [&>*]:border-gray-800 [&>*]:p-2 [&>*]:text-left">
-            <th>Employer Name</th>
             <th>Student Name</th>
-            <th>Work Report Link</th>
+            <th>Grade</th>
+            <th>Behaviour</th>
+            <th>Skills</th>
+            <th>Knowledge</th>
+            <th>Attitude</th>
           </tr>
           </thead>
           <tbody className="[&>*]:bg-black">
             {reportInfo.map((report, i) => 
             <tr key={i} className="[&>*]:border-2 [&>*]:border-gray-800 [&>*]:p-2 [&>*]:text-left">
-              <td>{report.Employer}</td>
-              <td>{report.Student}</td>
-              <td><a key={i} href={report.Report} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">{report.Report}</a></td>
+              <td>{report.studentName}</td>
+              <td>{report.grade}</td>
+              <td>{report.behaviour}</td>
+              <td>{report.skills}</td>
+              <td>{report.knowledge}</td>
+              <td>{report.attitude}</td>
             </tr>
             )}
           </tbody>

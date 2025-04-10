@@ -60,16 +60,18 @@ export async function getFilteredReportCollection(uid: string) {
   const reportCollection = collection(firestore, "users");
   const filteredCollection = query(
     reportCollection,
-    where("EmployerUID", "==", uid)
+    where("employerUID", "==", uid)
   );
 
   const result = (await getDocs(filteredCollection)).docs.map((doc) => {
     const data = doc.data();
     const info = {
-      EmployerUID: data.EmployerUID,
-      Employer: data.Employer,
-      Student: data.Student,
-      Report: data.Report,
+      studentName: data.employerEval.studentName,
+      grade: data.employerEval.grade,
+      behaviour: data.employerEval.behaviour,
+      skills: data.employerEval.skills,
+      knowledge: data.employerEval.knowledge,
+      attitude: data.employerEval.attitude
     };
     return info;
   });
