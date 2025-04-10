@@ -43,7 +43,7 @@ export default function Employer() {
     <>
       <Layout />
       <div className="relative flex flex-col min-h-3/4 w-3/4  bg-white rounded-4xl transform-[translate(-50%,-50%)] top-1/2 left-1/2 row-span-2 overflow-hidden">
-        <button className="bg-red-500" onClick={(_) => collect()}>Refresh</button>
+        <button className="bg-red-500 hover:bg-red-400 cursor-pointer" onClick={(_) => collect()}>Refresh</button>
         <table>
           <thead className="[&>*]:bg-black">
           <tr className="[&>*]:border-2 [&>*]:border-gray-800 [&>*]:p-2 [&>*]:text-left">

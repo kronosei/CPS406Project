@@ -218,7 +218,7 @@ export default function EmployerEvaluation() {
               }`}
             />
 
-            <button type="submit" className="bg-gray-800 p-5 mt-16 w-full">
+            <button type="submit" className="bg-gray-800 p-5 mt-16 w-full hover:bg-gray-700">
               Submit
             </button>
           </form>

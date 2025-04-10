@@ -154,10 +154,10 @@ export default function Advisor() {
                 {(user.name!=null) ? <td className="text-center p-2">{user.name}</td>:<td className="text-center">N/A</td>}
                 <td className="text-center p-2">{user.email}</td>
                 {(user.id!=null) ? <td className="text-center p-2">{user.id}</td>:<td className="text-center">N/A</td>}
-                {(user.employer!=null) ? <td className="text-center p-2">{user.employer}</td>:<td className="text-center">N/A</td>}
-                {(user.evaluation!=null) ? <td>{`Grade: ${user.evaluation.grade}`}<br/><br/>{`Behaviour: ${user.evaluation.behaviour}`}<br/><br/>{`Skills: ${user.evaluation.skills}`}<br/><br/>{`Knowledge: ${user.evaluation.knowledge}`}<br/><br/>{`Attitude: ${user.evaluation.attitude}`}</td>:<td className="text-center">N/A</td>}
+                {(user.employer!=="") ? <td className="text-center p-2">{user.employer}</td>:<td className="text-center">N/A</td>}
+                {(user.evaluation!=null) ? <td className="p-2">{`Grade: ${user.evaluation.grade}`}<br/><br/>{`Behaviour: ${user.evaluation.behaviour}`}<br/><br/>{`Skills: ${user.evaluation.skills}`}<br/><br/>{`Knowledge: ${user.evaluation.knowledge}`}<br/><br/>{`Attitude: ${user.evaluation.attitude}`}</td>:<td className="text-center">N/A</td>}
                 {Array.isArray(user.report) ? user.report.map((report, j) => (
-                  <td key={-j}>{`Work Term: ${report.workTerm}\n Description: ${report.description}`}</td>
+                  <td key={-j} className="p-2">{`Work Term: ${report.workTerm}\n Description: ${report.description}`}</td>
                 )) : null}
               </tr>
             ))}
