@@ -23,6 +23,7 @@ function Layout() {
   const router = useRouter();
   const logout = () => {
     auth.signOut();
+    router.refresh;
     router.push("/");
   };
   return (

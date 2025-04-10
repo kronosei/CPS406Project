@@ -85,7 +85,7 @@ export default function Advisor() {
             />
             <select
               id="filterSelect"
-              className="h-12 px-3 bg-white border border-gray-300 shadow-sm text-gray-700 "
+              className="h-12 px-3 bg-white border border-gray-300 shadow-sm text-gray-700 cursor-pointer"
               value={
                 filtering === 0
                   ? ""
@@ -104,15 +104,15 @@ export default function Advisor() {
                 }
               }}
             >
-              <option value="">All</option>
-              <option value="submitted">Submitted</option>
-              <option value="not_submitted">Not Submitted</option>
+              <option className="cursor-pointer" value="">All</option>
+              <option className="cursor-pointer" value="submitted">Submitted</option>
+              <option className="cursor-pointer" value="not_submitted">Not Submitted</option>
             </select>
             <button
               onClick={() => {
                 searchAndFilter();
               }}
-              className="w-12 h-12 flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white"
+              className="w-12 h-12 flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white cursor-pointer"
             >
               <svg
                 className="w-5 h-5"

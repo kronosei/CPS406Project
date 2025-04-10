@@ -95,7 +95,7 @@ export default function Student() {
                     : "border-b-red-500 placeholder:text-red-500 text-red-300"
                 }`}
               />
-              <button type="submit" className="bg-gray-800 p-5 mt-16 w-full hover:bg-gray-700">
+              <button type="submit" className="bg-gray-800 p-5 mt-16 w-full hover:bg-gray-700 cursor-pointer">
                 Submit
               </button>
             </form>
@@ -153,7 +153,7 @@ export default function Student() {
                 }}
                 className="w-full border-b-2 mr-5 my-5 pt-5 outline-0 border-b-gray-400 placeholder:text-gray-400 text-black"
               />
-              <button type="submit" className="bg-gray-800 p-5 mt-16 w-full hover:bg-gray-700">
+              <button type="submit" className="bg-gray-800 p-5 mt-16 w-full hover:bg-gray-700 cursor-pointer">
                 Submit
               </button>
             </form>

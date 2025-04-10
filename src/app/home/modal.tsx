@@ -117,7 +117,7 @@ export default function Modal({
               </div>
               <button
                 type="submit"
-                className="bg-gray-800 p-5 mt-16 w-full hover:bg-gray-600"
+                className="bg-gray-800 p-5 mt-16 w-full hover:bg-gray-600 cursor-pointer"
               >
                 Submit
               </button>
