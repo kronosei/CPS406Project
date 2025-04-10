@@ -70,7 +70,7 @@ export default function Advisor() {
       ) : null}
       <Layout />
       <div
-        className="relative flex flex-col h-3/4 w-3/4  bg-black transform-[translate(-50%,-50%)] top-1/2 left-1/2 row-span-2 overflow-y-auto no-scrollbar"
+        className="relative flex flex-col h-3/4 w-3/4  bg-black transform-[translate(-50%,-50%)] top-1/2 left-1/2 row-span-2 overflow-auto no-scrollbar"
         style={{ scrollbarWidth: "none" }}
       >
         <div className="w-full my-5">
@@ -151,14 +151,48 @@ export default function Advisor() {
                   setModal(true);
                 }}
               >
-                {(user.name!=null) ? <td className="text-center p-2">{user.name}</td>:<td className="text-center">N/A</td>}
+                {user.name != null ? (
+                  <td className="text-center p-2">{user.name}</td>
+                ) : (
+                  <td className="text-center">N/A</td>
+                )}
                 <td className="text-center p-2">{user.email}</td>
-                {(user.id!=null) ? <td className="text-center p-2">{user.id}</td>:<td className="text-center">N/A</td>}
-                {(user.employer!=null) ? <td className="text-center p-2">{user.employer}</td>:<td className="text-center">N/A</td>}
-                {(user.evaluation!=null) ? <td>{`Grade: ${user.evaluation.grade}`}<br/><br/>{`Behaviour: ${user.evaluation.behaviour}`}<br/><br/>{`Skills: ${user.evaluation.skills}`}<br/><br/>{`Knowledge: ${user.evaluation.knowledge}`}<br/><br/>{`Attitude: ${user.evaluation.attitude}`}</td>:<td className="text-center">N/A</td>}
-                {Array.isArray(user.report) ? user.report.map((report, j) => (
-                  <td key={-j}>{`Work Term: ${report.workTerm}\n Description: ${report.description}`}</td>
-                )) : null}
+                {user.id != null ? (
+                  <td className="text-center p-2">{user.id}</td>
+                ) : (
+                  <td className="text-center">N/A</td>
+                )}
+                {user.employer != null ? (
+                  <td className="text-center p-2">{user.employer}</td>
+                ) : (
+                  <td className="text-center">N/A</td>
+                )}
+                {user.evaluation != null ? (
+                  <td>
+                    {`Grade: ${user.evaluation.grade}`}
+                    <br />
+                    <br />
+                    {`Behaviour: ${user.evaluation.behaviour}`}
+                    <br />
+                    <br />
+                    {`Skills: ${user.evaluation.skills}`}
+                    <br />
+                    <br />
+                    {`Knowledge: ${user.evaluation.knowledge}`}
+                    <br />
+                    <br />
+                    {`Attitude: ${user.evaluation.attitude}`}
+                  </td>
+                ) : (
+                  <td className="text-center">N/A</td>
+                )}
+                {Array.isArray(user.report)
+                  ? user.report.map((report, j) => (
+                      <td
+                        key={-j}
+                      >{`Work Term: ${report.workTerm}\n Description: ${report.description}`}</td>
+                    ))
+                  : null}
               </tr>
             ))}
           </tbody>
@@ -167,5 +201,3 @@ export default function Advisor() {
     </>
   );
 }
-
-
