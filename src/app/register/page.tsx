@@ -47,6 +47,7 @@ export default function Login() {
             type: "student",
             email: inputEmail,
             admin: false,
+            employer: "",
           });
           break;
         case 2:
