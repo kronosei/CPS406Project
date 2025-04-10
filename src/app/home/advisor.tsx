@@ -33,7 +33,7 @@ interface User {
   type: string | null;
   employer: string | null;
   evaluation: evaluation | null;
-  report: report[] | [];
+  report: report[] | string;
 }
 
 export default function Advisor() {
@@ -91,7 +91,11 @@ export default function Advisor() {
                   ? ""
                   : filtering === 1
                   ? "submitted"
-                  : "not_submitted"
+                  : filtering === -1
+                  ? "not_submitted"
+                  : filtering === 2
+                  ? "work_term"
+                  : "no_work_term"
               }
               onChange={(e) => {
                 const value = e.target.value;
@@ -99,14 +103,20 @@ export default function Advisor() {
                   setFiltering(1);
                 } else if (value === "not_submitted") {
                   setFiltering(-1);
+                } else if (value === "work_term") {
+                  setFiltering(2);
+                } else if (value === "no_work_term") {
+                  setFiltering(-2);
                 } else {
                   setFiltering(0);
                 }
               }}
             >
               <option className="cursor-pointer" value="">All</option>
-              <option className="cursor-pointer" value="submitted">Submitted</option>
-              <option className="cursor-pointer" value="not_submitted">Not Submitted</option>
+              <option className="cursor-pointer" value="submitted">Has Employer Evaluation</option>
+              <option className="cursor-pointer" value="not_submitted">No Employer Evaluation</option>
+              <option className="cursor-pointer" value="work_term">Has Work Term Reports</option>
+              <option className="cursor-pointer" value="no_work_term">No Work Term Reports</option>
             </select>
             <button
               onClick={() => {
@@ -162,7 +172,7 @@ export default function Advisor() {
                 {(user.evaluation!=null) ? <td className="p-2">{`Grade: ${user.evaluation.grade}`}<br/><br/>{`Behaviour: ${user.evaluation.behaviour}`}<br/><br/>{`Skills: ${user.evaluation.skills}`}<br/><br/>{`Knowledge: ${user.evaluation.knowledge}`}<br/><br/>{`Attitude: ${user.evaluation.attitude}`}</td>:<td className="text-center">N/A</td>}
                 {Array.isArray(user.report) ? user.report.map((report, j) => (
                   <td key={-j} className="p-2">{`Work Term: ${report.workTerm}`}<br/><br/>{`Description: ${report.description}`}</td>
-                )) : null}
+                )) : <td className="text-center">N/A</td>}
               </tr>
             ))}
           </tbody>

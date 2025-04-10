@@ -25,8 +25,12 @@ export async function getFilterCollection(filtering: number, searchID: string) {
   //Filter on the search bar and filter option
   if (filtering == 1) {
     q = query(q, where("employer", "!=", ""));
+  } else if (filtering == 2) {
+    q = query(q, where("report", "!=", ""));
   } else if (filtering == -1) {
     q = query(q, where("employer", "==", ""));
+  } else if (filtering == -2) {
+    q = query(q, where("report", "==", ""));
   }
 
   if (searchID != "") {

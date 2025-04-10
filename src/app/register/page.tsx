@@ -48,6 +48,7 @@ export default function Login() {
             email: inputEmail,
             admin: false,
             employer: "",
+            report: "",
           });
           break;
         case 2:
