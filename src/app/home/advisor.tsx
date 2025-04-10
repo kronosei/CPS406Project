@@ -161,7 +161,7 @@ export default function Advisor() {
                 {(user.employer!=="") ? <td className="text-center p-2">{user.employer}</td>:<td className="text-center">N/A</td>}
                 {(user.evaluation!=null) ? <td className="p-2">{`Grade: ${user.evaluation.grade}`}<br/><br/>{`Behaviour: ${user.evaluation.behaviour}`}<br/><br/>{`Skills: ${user.evaluation.skills}`}<br/><br/>{`Knowledge: ${user.evaluation.knowledge}`}<br/><br/>{`Attitude: ${user.evaluation.attitude}`}</td>:<td className="text-center">N/A</td>}
                 {Array.isArray(user.report) ? user.report.map((report, j) => (
-                  <td key={-j} className="p-2">{`Work Term: ${report.workTerm}\n Description: ${report.description}`}</td>
+                  <td key={-j} className="p-2">{`Work Term: ${report.workTerm}`}<br/><br/>{`Description: ${report.description}`}</td>
                 )) : null}
               </tr>
             ))}
