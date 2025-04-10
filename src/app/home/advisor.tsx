@@ -70,7 +70,7 @@ export default function Advisor() {
       ) : null}
       <Layout />
       <div
-        className="relative flex flex-col h-3/4 w-3/4  bg-black transform-[translate(-50%,-50%)] top-1/2 left-1/2 row-span-2 overflow-y-auto no-scrollbar"
+        className="relative flex flex-col h-3/4 w-3/4  bg-black transform-[translate(-50%,-50%)] top-1/2 left-1/2 row-span-2 overflow-auto no-scrollbar"
         style={{ scrollbarWidth: "none" }}
       >
         <div className="w-full my-5">
@@ -151,7 +151,11 @@ export default function Advisor() {
                   setModal(true);
                 }}
               >
-                {(user.name!=null) ? <td className="text-center p-2">{user.name}</td>:<td className="text-center">N/A</td>}
+                {user.name != null ? (
+                  <td className="text-center p-2">{user.name}</td>
+                ) : (
+                  <td className="text-center">N/A</td>
+                )}
                 <td className="text-center p-2">{user.email}</td>
                 {(user.id!=null) ? <td className="text-center p-2">{user.id}</td>:<td className="text-center">N/A</td>}
                 {(user.employer!=="") ? <td className="text-center p-2">{user.employer}</td>:<td className="text-center">N/A</td>}
@@ -167,5 +171,3 @@ export default function Advisor() {
     </>
   );
 }
-
-
